@@ -7,6 +7,7 @@ from collections import defaultdict
 
 def parse_sra_accs(sra_accs):
     sra_acc_pattern = re.compile('[SED]RR\d+')
+    sra_accs = sra_accs.replace(',', ' ')
     sra_accs = sra_accs.upper().split()
     for acc in sra_accs:
         if not sra_acc_pattern.fullmatch(acc):
@@ -75,13 +76,14 @@ def process_per_seq_quals(per_seq_quals, threshold=27):
 
 
 def generate_results_table(sra_accs, qc_level, threshold):
+    passing_accs = []
     header = ['SRA Acc.',
               'No. of reads',
               'Read length', 
               'Percent GC',
               'Poor qual reads',
               'Failed metrics',
-              'Percent reads over threshold quality',
+              'Pct reads over threshold qual',
               'FastQC Report']
     tbl_str = '|' + '|'.join(header) + '|\n'
     tbl_str += '|----|----|----|----|----|----|----|----|\n'
@@ -93,6 +95,11 @@ def generate_results_table(sra_accs, qc_level, threshold):
         failed_metrics = '<br>'.join(qc_results.get('FAIL', ['None']))
         warn_metrics = '<br>'.join(qc_results.get('WARN', ['None']))
         basic_stats, per_seq_quals = parse_fastqc_data(fastqc_data)
+        pct_seqs_over_thr = process_per_seq_quals(per_seq_quals)
+        
+        if pct_seqs_over_thr >= 90:
+            passing_accs.append(acc)
+
         tbl_str += '|' + acc + '|'
         for k in ['Total Sequences',
                   'Sequence length',
@@ -100,8 +107,9 @@ def generate_results_table(sra_accs, qc_level, threshold):
                   'Sequences flagged as poor quality']:
             tbl_str += basic_stats[k] + '|'
         tbl_str += failed_metrics + '|'    
-        pct_seqs_over_thr = process_per_seq_quals(per_seq_quals)
         tbl_str += '{0:5.2f}|'.format(pct_seqs_over_thr)
     #     tbl_str += '[Report](./' + fastqc_report + ')|\n' # not opening in new tab
         tbl_str += '<a href="./' + fastqc_report + '" target="_blank">Report</a> |\n'
+        
+    print("At least 90% of the reads have quality scores over the threshold in the following accessions: {}" .format(', '.join(passing_accs)))
     return tbl_str
