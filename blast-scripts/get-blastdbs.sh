@@ -7,13 +7,13 @@
 export PATH=/bin:/usr/bin
 set -euo pipefail
 
-sudo mkdir -m 755 -p /blast/db/
-cd /blast/db/
-#sudo update_blastdb.pl --source gcp --decompress nt_v5
-#sudo update_blastdb.pl --source gcp --decompress ref_viroids_rep_genomes_v5 
-#sudo update_blastdb.pl --source gcp --decompress split-cdd 
-#sudo update_blastdb.pl --source gcp --decompress ref_viruses_rep_genomes_v5
-#sudo update_blastdb.pl --source ncbi --decompress nt
+sudo mkdir -m 755 -p /srv/data/shared_data/blast/db/
+cd /srv/data/shared_data/blast/db/
+sudo update_blastdb.pl --source gcp --decompress nt_v5
+sudo update_blastdb.pl --source gcp --decompress ref_viroids_rep_genomes_v5 
+sudo update_blastdb.pl --source gcp --decompress split-cdd 
+sudo update_blastdb.pl --source gcp --decompress ref_viruses_rep_genomes_v5
+sudo update_blastdb.pl --source ncbi --decompress nt
 
 # FIXME: cannot find VIV?
 #sudo update_blastdb.pl --source gcp --decompress NCBI_VIV_nucleotide_sequences_v5
