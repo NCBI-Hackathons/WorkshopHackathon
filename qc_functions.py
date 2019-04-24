@@ -113,7 +113,7 @@ def generate_results_table_md(sra_accs, qc_level, threshold):
         tbl_str += '<a href="./' + fastqc_report + '" target="_blank">Report</a> |\n'
         
     print("At least 90% of the reads have quality scores over the threshold in the following accessions: {}" .format(', '.join(passing_accs)))
-    return tbl_str
+    return tbl_str, passing_accs
 
 
 def generate_results_table(sra_accs, qc_level, threshold):
@@ -142,4 +142,4 @@ def generate_results_table(sra_accs, qc_level, threshold):
         results_table['Pct reads over threshold qual'].append('{0:5.2f}|'.format(pct_seqs_over_thr))
         
     print("At least 90% of the reads have quality scores over the threshold in the following accessions: {}" .format(', '.join(passing_accs)))
-    return results_table
+    return results_table, passing_accs
