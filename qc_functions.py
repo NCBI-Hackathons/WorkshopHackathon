@@ -2,6 +2,7 @@
 
 import csv
 import re
+import pandas as pd
 from collections import defaultdict
 
 
@@ -75,7 +76,7 @@ def process_per_seq_quals(per_seq_quals, threshold=27):
     return pct_seqs_over_thr
 
 
-def generate_results_table(sra_accs, qc_level, threshold):
+def generate_results_table_md(sra_accs, qc_level, threshold):
     passing_accs = []
     header = ['SRA Acc.',
               'No. of reads',
@@ -113,3 +114,32 @@ def generate_results_table(sra_accs, qc_level, threshold):
         
     print("At least 90% of the reads have quality scores over the threshold in the following accessions: {}" .format(', '.join(passing_accs)))
     return tbl_str
+
+
+def generate_results_table(sra_accs, qc_level, threshold):
+    passing_accs = []
+    results_table = defaultdict(list)
+    for acc in sra_accs.split():
+        fastqc_summary = acc + '_fastqc/summary.txt'
+        fastqc_data = acc + '_fastqc/fastqc_data.txt'
+        fastqc_report = acc + '_fastqc.html'
+        qc_results = parse_summary_qc(fastqc_summary, qc_level)
+        failed_metrics = ', '.join(qc_results.get('FAIL', ['None']))
+        warn_metrics = ', '.join(qc_results.get('WARN', ['None']))
+        basic_stats, per_seq_quals = parse_fastqc_data(fastqc_data)
+        pct_seqs_over_thr = process_per_seq_quals(per_seq_quals)
+        
+        if pct_seqs_over_thr >= 90:
+            passing_accs.append(acc)
+
+        results_table['SRA Acc'].append(acc)
+        for k in ['Total Sequences',
+                  'Sequence length',
+                  '%GC',
+                  'Sequences flagged as poor quality']:
+            results_table[k].append(basic_stats[k])
+        results_table['Failed metrics'].append(failed_metrics)    
+        results_table['Pct reads over threshold qual'].append('{0:5.2f}|'.format(pct_seqs_over_thr))
+        
+    print("At least 90% of the reads have quality scores over the threshold in the following accessions: {}" .format(', '.join(passing_accs)))
+    return results_table
