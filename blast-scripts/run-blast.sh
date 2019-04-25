@@ -15,5 +15,5 @@ for db in ref_viruses_rep_genomes_v5 ref_viroids_rep_genomes_v5 nt ; do
 done
 
 # Format results
-parallel --joblog blast-format.log blast_formatter -archive {} -out {.}.tab -outfmt '7 std qlen qcovs qcovhsp qcovus staxids sblastnames' ::: *.asn
+parallel -q --joblog blast-format.log blast_formatter -archive {} -out {.}.tab -outfmt '7 std qlen qcovs qcovhsp qcovus staxids sblastnames' ::: *.asn
 parallel gzip {} ::: *.asn
