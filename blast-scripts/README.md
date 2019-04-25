@@ -32,10 +32,10 @@ please follow the instructions on step 3.
     ```
 
 1. Authenticate (this is only needed the first time you connect to a running jupyter server - may need to re-run if the server was restarted).
-   1.1 Open your web browser in which your colab jupyter notebook is open and go to the authentication URL (will look like the URL below, this is the
-       output of step 2.6). Ask the person who set up/started the jupyter notebook server for the actual URL
 
-  http://localhost:8888/?token=6a79bffd168062a2254fa4731274d46730d13dee952478fc
+   *Open your web browser in which your colab jupyter notebook is open and go to the authentication URL (will look like the URL below, this is the
+    output of step 2.6). Ask the person who set up/started the jupyter notebook server for the actual URL
+    http://localhost:8888/?token=6a79bffd168062a2254fa4731274d46730d13dee952478fc
     
 1. Click on 'Connect to local runtime' (top right of the page in `colab.research.google`).
 
