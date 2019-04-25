@@ -26,9 +26,11 @@ please follow the instructions on step 3.
 1. On your local machine, create an ssh tunnel:
 
     ```bash
-    # Two possibilities:
-    ssh $IP -L 8888:localhost:8888`   # OR  
-    gcloud compute ssh --zone YOUR_ZONE YOUR_INSTANCE_NAME -- -L 8888:localhost:8888`    
+    # Use ssh if you only have the IP address of the server you are trying to connect
+    ssh $IP -L 8888:localhost:8888`   
+
+    # OR use gcloud if available and you have the values for $YOUR_ZONE and $YOUR_INSTANCE_NAME
+    gcloud compute ssh --zone $YOUR_ZONE $YOUR_INSTANCE_NAME -- -L 8888:localhost:8888`    
     ```
 
 1. Authenticate (this is only needed the first time you connect to a running jupyter server - may need to re-run if the server was restarted).
