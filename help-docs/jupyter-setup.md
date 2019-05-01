@@ -5,7 +5,7 @@
 
 * Run this manually as root
 
-```
+```bash
 #!/bin/bash
 curl https://raw.githubusercontent.com/jupyterhub/the-littlest-jupyterhub/master/bootstrap/bootstrap.py \
   | sudo python3 - \
@@ -16,7 +16,8 @@ curl https://raw.githubusercontent.com/jupyterhub/the-littlest-jupyterhub/master
 * Create a domain name pointing to your server
 
 * SSL Setup
-```
+
+```bash
     $ sudo tljh-config set https.enabled true
     $ sudo tljh-config add-item https.letsencrypt.domains [domain.ext]
     $ sudo tljh-config set https.letsencrypt.email valid-email@example.com
@@ -27,7 +28,8 @@ curl https://raw.githubusercontent.com/jupyterhub/the-littlest-jupyterhub/master
 * Oauth Github Setup
 
   * Set up the [GitHub OAuth Application]()
-```
+  
+```bash
     $ sudo tljh-config set auth.GitHubOAuthenticator.client_id '[client_id]'
     $ sudo tljh-config set auth.GitHubOAuthenticator.client_secret '[client_secret]'
     $ sudo tljh-config set auth.GitHubOAuthenticator.oauth_callback_url 'https://[domain]/hub/oauth_callback'
@@ -35,6 +37,7 @@ curl https://raw.githubusercontent.com/jupyterhub/the-littlest-jupyterhub/master
 
     $sudo tljh-config reload
 ```
+
 > To allow any user use
 > `tljh-config set auth.FirstUseAuthenticator.create_users true`
 or
@@ -46,7 +49,7 @@ or
 
 > Fix:
 
-```
+```bash
 $ sudo su -
 # cd /opt/tljh/hub
 # source ./bin/activate
