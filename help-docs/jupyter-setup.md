@@ -68,3 +68,13 @@ $ sudo tljh-config reload
 Generate nbgitpuller links to import github notebooks to tljh
 https://mybinder.org/v2/gh/jupyterhub/nbgitpuller/master?urlpath=apps/binder%2Flink_generator.ipynb
 
+## Additional Resources
+
+JupyterHub: https://jupyterhub.readthedocs.io/en/stable/index.html
+* On Docker: https://jupyterhub.readthedocs.io/en/stable/quickstart-docker.html
+  * Tutorial: https://www.dataquest.io/blog/docker-data-science/
+* Docker Stacks: https://jupyter-docker-stacks.readthedocs.io/en/latest/
+* Scalable JupyterHub on Docker Swarm: https://zonca.github.io/2017/10/scalable-jupyterhub-docker-swarm-mode.html
+
+
+
